@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { Check, CheckCircle2, PlaneTakeoff, ShieldCheck, CalendarCheck, Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -9,8 +7,7 @@ export default function Notifications() {
   const tabs = ['All', 'Trips', 'Community', 'System'];
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-16 py-12 md:py-20">
         
@@ -138,7 +135,6 @@ export default function Notifications() {
         
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

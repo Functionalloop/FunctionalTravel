@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { GripVertical, Trash2, Calendar, Banknote, MapPinPlusInside } from 'lucide-react';
 
 type ActivityType = 'Flight' | 'Stay' | 'Tour' | 'Dining';
@@ -58,8 +56,7 @@ export default function BuildItinerary() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="mb-10 text-center md:text-left">
@@ -178,7 +175,6 @@ export default function BuildItinerary() {
         </form>
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

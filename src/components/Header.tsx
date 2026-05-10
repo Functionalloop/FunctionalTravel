@@ -1,9 +1,11 @@
 import { Bell, Menu, Search, Compass } from 'lucide-react';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
   const location = useLocation();
+  const { currentUser, logout } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -27,7 +29,13 @@ export default function Header() {
               to="/search" 
               className={`${isActive('/search') ? 'text-[#4d7c0f] font-semibold border-b-2 border-[#4d7c0f]' : 'text-gray-500 hover:text-[#4d7c0f] font-medium'} pb-1 transition-colors`}
             >
-              Destinations
+              Activities
+            </Link>
+            <Link 
+              to="/city-search" 
+              className={`${isActive('/city-search') ? 'text-[#4d7c0f] font-semibold border-b-2 border-[#4d7c0f]' : 'text-gray-500 hover:text-[#4d7c0f] font-medium'} pb-1 transition-colors`}
+            >
+              Cities
             </Link>
             <Link 
               to="/plan-trip" 
@@ -74,12 +82,26 @@ export default function Header() {
             </div>
             
             <div className="hidden sm:flex items-center space-x-3">
-              <Link
-                to="/login"
-                className="px-5 py-2.5 border-2 border-gray-200 text-gray-600 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-              >
-                Sign In
-              </Link>
+              {currentUser ? (
+                <>
+                  <span className="text-gray-600 font-medium">
+                    {currentUser.email}
+                  </span>
+                  <button
+                    onClick={logout}
+                    className="px-5 py-2.5 border-2 border-gray-200 text-gray-600 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className="px-5 py-2.5 border-2 border-gray-200 text-gray-600 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Sign In
+                </Link>
+              )}
               <button className="px-5 py-2.5 bg-[#65a30d] text-white rounded-lg font-medium hover:bg-[#4d7c0f] transition-all shadow-sm">
                 Book Now
               </button>

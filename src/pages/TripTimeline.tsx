@@ -1,12 +1,9 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { Check, Ticket, IdCard, FileText, UploadCloud } from 'lucide-react';
 
 export default function TripTimeline() {
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-16 py-12 md:py-20">
         <div className="mb-12">
@@ -166,7 +163,6 @@ export default function TripTimeline() {
         </div>
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

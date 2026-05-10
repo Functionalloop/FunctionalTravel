@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { Search, Filter, ArrowUpDown, Plus, Image as ImageIcon, FileText } from 'lucide-react';
 
 const notesList = [
@@ -42,8 +40,7 @@ export default function TripNotes() {
   const [activeFilter, setActiveFilter] = useState('All');
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow flex flex-col items-center w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 gap-8">
         
@@ -127,7 +124,6 @@ export default function TripNotes() {
 
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

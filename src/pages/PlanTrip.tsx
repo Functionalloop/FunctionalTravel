@@ -1,12 +1,47 @@
-import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { MapPin, Calendar, ArrowRight, Heart } from 'lucide-react';
+import React, { useState } from 'react';
+import { MapPin, Calendar, ArrowRight, Heart, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useAuth } from '../context/AuthContext';
 
 export default function PlanTrip() {
+  const [tripName, setTripName] = useState('');
+  const [destination, setDestination] = useState('');
+  const [description, setDescription] = useState('');
+  const [coverPhoto, setCoverPhoto] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  const handlePlanTrip = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!tripName || !destination || !startDate || !endDate) return;
+    
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, 'itineraries'), {
+        title: tripName,
+        destination,
+        description,
+        imageUrl: coverPhoto || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80',
+        startDate,
+        endDate,
+        status: 'Upcoming',
+        userId: currentUser?.uid || 'anonymous',
+        createdAt: new Date().toISOString()
+      });
+      navigate('/itineraries');
+    } catch (err) {
+      console.error("Error creating trip:", err);
+      setIsSubmitting(false);
+    }
+  };
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow pb-24">
         {/* Planning Form Section */}
@@ -14,7 +49,23 @@ export default function PlanTrip() {
           <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-8 md:p-10 border border-gray-100">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Plan a new trip</h1>
             
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6" onSubmit={handlePlanTrip}>
+              {/* Trip Name */}
+              <div>
+                <label htmlFor="trip_name" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Trip Name
+                </label>
+                <input 
+                  type="text" 
+                  id="trip_name" 
+                  value={tripName}
+                  onChange={(e) => setTripName(e.target.value)}
+                  placeholder="e.g., Summer Europe Adventure" 
+                  className="w-full h-14 px-4 bg-white rounded-xl border border-gray-200 focus:border-[#65a30d] focus:ring-1 focus:ring-[#65a30d] outline-none transition-colors text-gray-900 placeholder-gray-400"
+                  required
+                />
+              </div>
+
               {/* Location */}
               <div>
                 <label htmlFor="destination" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -25,10 +76,43 @@ export default function PlanTrip() {
                   <input 
                     type="text" 
                     id="destination" 
+                    value={destination}
+                    onChange={(e) => setDestination(e.target.value)}
                     placeholder="Where do you want to go?" 
                     className="w-full h-14 pl-12 pr-4 bg-white rounded-xl border border-gray-200 focus:border-[#65a30d] focus:ring-1 focus:ring-[#65a30d] outline-none transition-colors text-gray-900 placeholder-gray-400"
+                    required
                   />
                 </div>
+              </div>
+
+              {/* Trip Description */}
+              <div>
+                <label htmlFor="trip_desc" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Trip Description
+                </label>
+                <textarea 
+                  id="trip_desc" 
+                  rows={3}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Describe your trip — what's the theme, who's coming, what are you most excited about?" 
+                  className="w-full px-4 py-3.5 bg-white rounded-xl border border-gray-200 focus:border-[#65a30d] focus:ring-1 focus:ring-[#65a30d] outline-none transition-colors text-gray-900 placeholder-gray-400 resize-y"
+                />
+              </div>
+
+              {/* Cover Photo URL (Optional) */}
+              <div>
+                <label htmlFor="cover_photo" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Cover Photo URL <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input 
+                  type="url" 
+                  id="cover_photo" 
+                  value={coverPhoto}
+                  onChange={(e) => setCoverPhoto(e.target.value)}
+                  placeholder="https://example.com/image.jpg" 
+                  className="w-full h-14 px-4 bg-white rounded-xl border border-gray-200 focus:border-[#65a30d] focus:ring-1 focus:ring-[#65a30d] outline-none transition-colors text-gray-900 placeholder-gray-400"
+                />
               </div>
               
               {/* Dates Row */}
@@ -42,7 +126,10 @@ export default function PlanTrip() {
                     <input 
                       type="date" 
                       id="start_date" 
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
                       className="w-full h-14 pl-12 pr-4 bg-white rounded-xl border border-gray-200 focus:border-[#65a30d] focus:ring-1 focus:ring-[#65a30d] outline-none transition-colors text-gray-900 appearance-none"
+                      required
                     />
                   </div>
                 </div>
@@ -55,7 +142,10 @@ export default function PlanTrip() {
                     <input 
                       type="date" 
                       id="end_date" 
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
                       className="w-full h-14 pl-12 pr-4 bg-white rounded-xl border border-gray-200 focus:border-[#65a30d] focus:ring-1 focus:ring-[#65a30d] outline-none transition-colors text-gray-900 appearance-none"
+                      required
                     />
                   </div>
                 </div>
@@ -64,10 +154,17 @@ export default function PlanTrip() {
               <div className="pt-4">
                 <button 
                   type="submit" 
-                  className="w-full h-14 bg-[#65a30d] text-white font-semibold rounded-xl shadow-sm hover:shadow-md hover:bg-[#4d7c0f] transition-all flex items-center justify-center space-x-2 group"
+                  disabled={isSubmitting}
+                  className="w-full h-14 bg-[#65a30d] text-white font-semibold rounded-xl shadow-sm hover:shadow-md hover:bg-[#4d7c0f] transition-all flex items-center justify-center space-x-2 group disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span>Start Planning</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  {isSubmitting ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      <span>Start Planning</span>
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -203,7 +300,6 @@ export default function PlanTrip() {
         </section>
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

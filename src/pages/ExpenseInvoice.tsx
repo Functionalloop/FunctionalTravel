@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { 
   ArrowLeft, Euro, BarChart3, Bus, Bed, Ticket, 
   Utensils, Download, FileText, CheckCircle2 
@@ -9,8 +7,7 @@ import { Link } from 'react-router-dom';
 
 export default function ExpenseInvoice() {
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-16 py-12 pb-20">
         
@@ -219,7 +216,6 @@ export default function ExpenseInvoice() {
 
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

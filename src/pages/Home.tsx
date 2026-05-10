@@ -1,16 +1,36 @@
-import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import React, { useState, useEffect } from 'react';
 import { 
   Search, ChevronDown, SlidersHorizontal, PlusCircle, 
   Calendar, Users, Camera, MapPin, Footprints, Sailboat, 
-  Plane, Bed, Plus 
+  Plane, Bed, Plus, Loader2
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function Home() {
+  const [destinations, setDestinations] = useState<any[]>([]);
+  const [loadingRegions, setLoadingRegions] = useState(true);
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'destinations'));
+        const fetchedDests: any[] = [];
+        querySnapshot.forEach((docSnap) => {
+          fetchedDests.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        setDestinations(fetchedDests.slice(0, 4)); // Show top 4
+      } catch (err) {
+        console.error("Failed to fetch destinations:", err);
+      } finally {
+        setLoadingRegions(false);
+      }
+    };
+    fetchDestinations();
+  }, []);
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow pb-16">
         {/* Hero Section */}
@@ -55,10 +75,10 @@ export default function Home() {
             
             {/* Plan New Trip Button */}
             <div className="mt-8">
-              <button className="bg-[#4d7c0f] text-white px-8 py-3.5 rounded-full font-semibold hover:bg-[#3f6212] transition-colors shadow-lg flex items-center gap-2">
+              <Link to="/plan-trip" className="bg-[#4d7c0f] text-white px-8 py-3.5 rounded-full font-semibold hover:bg-[#3f6212] transition-colors shadow-lg flex items-center gap-2">
                 <PlusCircle className="w-5 h-5" />
                 Plan New Trip
-              </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -71,61 +91,32 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1 */}
-            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
-              <div className="relative w-full aspect-[4/3] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1513622470522-26cb28dca617?auto=format&fit=crop&q=80" alt="Western Europe" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Cultural</div>
+            {loadingRegions ? (
+              <div className="col-span-1 sm:col-span-2 lg:col-span-4 flex justify-center py-12">
+                <Loader2 className="w-8 h-8 text-[#65a30d] animate-spin" />
               </div>
-              <div className="p-5 flex-grow flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">Western Europe</h3>
-                  <p className="text-gray-600 text-sm line-clamp-2">Immerse yourself in historic cities, world-class art, and culinary excellence.</p>
+            ) : destinations.length > 0 ? (
+              destinations.map(dest => (
+                <div key={dest.id} className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
+                  <div className="relative w-full aspect-[4/3] overflow-hidden">
+                    <img src={dest.image} alt={dest.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">
+                      {dest.country}
+                    </div>
+                  </div>
+                  <div className="p-5 flex-grow flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">{dest.name}</h3>
+                      <p className="text-gray-600 text-sm line-clamp-2">{dest.description}</p>
+                    </div>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="col-span-1 sm:col-span-2 lg:col-span-4 text-center text-gray-500 py-8">
+                No destinations available yet.
               </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
-              <div className="relative w-full aspect-[4/3] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80" alt="Southeast Asia" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Tropical</div>
-              </div>
-              <div className="p-5 flex-grow flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">Southeast Asia</h3>
-                  <p className="text-gray-600 text-sm line-clamp-2">Pristine beaches, ancient temples, and vibrant street life await.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
-              <div className="relative w-full aspect-[4/3] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1489493173507-6feea31f12ff?auto=format&fit=crop&q=80" alt="North Africa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Adventure</div>
-              </div>
-              <div className="p-5 flex-grow flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">North Africa</h3>
-                  <p className="text-gray-600 text-sm line-clamp-2">Experience the magic of the Sahara and vibrant historical medinas.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
-              <div className="relative w-full aspect-[4/3] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&q=80" alt="Swiss Alps" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Nature</div>
-              </div>
-              <div className="p-5 flex-grow flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">Swiss Alps</h3>
-                  <p className="text-gray-600 text-sm line-clamp-2">Breathtaking mountain vistas, luxury chalets, and alpine tranquility.</p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </section>
 
@@ -285,7 +276,6 @@ export default function Home() {
 
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

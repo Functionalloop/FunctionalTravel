@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { 
   Search, Users, Filter, ArrowUpDown, 
   FileText, Shirt, Smartphone, Bath, Plus, 
@@ -86,8 +84,7 @@ export default function PackingChecklist() {
   const progress = Math.round((packedItems / totalItems) * 100) || 0;
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
-      <Header />
+    <>
       
       <main className="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         
@@ -202,7 +199,6 @@ export default function PackingChecklist() {
 
       </main>
       
-      <Footer />
-    </div>
+      </>
   );
 }

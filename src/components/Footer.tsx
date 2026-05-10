@@ -15,7 +15,7 @@ export default function Footer() {
               </Link>
             </div>
             <p className="text-sm">
-              © 2024 Traveloop Adventure Platform. All rights reserved.
+              © 2026 Traveloop Adventure Platform. All rights reserved.
             </p>
           </div>
           
