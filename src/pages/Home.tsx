@@ -1,0 +1,291 @@
+import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import { 
+  Search, ChevronDown, SlidersHorizontal, PlusCircle, 
+  Calendar, Users, Camera, MapPin, Footprints, Sailboat, 
+  Plane, Bed, Plus 
+} from 'lucide-react';
+
+export default function Home() {
+  return (
+    <div className="min-h-screen flex flex-col font-sans bg-[#faf9f9]">
+      <Header />
+      
+      <main className="flex-grow pb-16">
+        {/* Hero Section */}
+        <section className="relative w-full h-[500px] sm:h-[600px] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80" 
+              alt="Grand canyon landscape at sunset" 
+              className="w-full h-full object-cover object-center"
+            />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-blue-900/30 mix-blend-multiply"></div>
+          </div>
+          
+          <div className="relative z-10 w-full max-w-5xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+            <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 drop-shadow-md">
+              Discover Your Next Great Adventure
+            </h1>
+            
+            {/* Search Component */}
+            <div className="w-full max-w-3xl bg-white rounded-full p-2 flex items-center shadow-lg">
+              <div className="flex-grow flex items-center px-4">
+                <Search className="text-gray-400 w-5 h-5 mr-3" />
+                <input 
+                  type="text" 
+                  placeholder="Where do you want to go?" 
+                  className="w-full bg-transparent border-none focus:ring-0 text-gray-800 text-lg placeholder-gray-400 py-3 outline-none"
+                />
+              </div>
+              <div className="hidden sm:flex items-center border-l border-gray-200 pl-4 pr-2 space-x-2">
+                <button className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-50 rounded-full transition-colors flex items-center gap-1">
+                  Group by <ChevronDown className="w-4 h-4 ml-1" />
+                </button>
+                <button className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-50 rounded-full transition-colors flex items-center gap-1">
+                  Filter <SlidersHorizontal className="w-4 h-4 ml-1" />
+                </button>
+              </div>
+              <button className="bg-[#65a30d] text-white px-8 py-3.5 rounded-full font-semibold hover:bg-[#4d7c0f] transition-colors ml-2 shadow-sm whitespace-nowrap">
+                Search
+              </button>
+            </div>
+            
+            {/* Plan New Trip Button */}
+            <div className="mt-8">
+              <button className="bg-[#4d7c0f] text-white px-8 py-3.5 rounded-full font-semibold hover:bg-[#3f6212] transition-colors shadow-lg flex items-center gap-2">
+                <PlusCircle className="w-5 h-5" />
+                Plan New Trip
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Top Regional Selections */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Top Regional Selections</h2>
+            <a href="#" className="text-[#65a30d] font-medium hover:underline hidden sm:block">View all regions</a>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Card 1 */}
+            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1513622470522-26cb28dca617?auto=format&fit=crop&q=80" alt="Western Europe" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Cultural</div>
+              </div>
+              <div className="p-5 flex-grow flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">Western Europe</h3>
+                  <p className="text-gray-600 text-sm line-clamp-2">Immerse yourself in historic cities, world-class art, and culinary excellence.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80" alt="Southeast Asia" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Tropical</div>
+              </div>
+              <div className="p-5 flex-grow flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">Southeast Asia</h3>
+                  <p className="text-gray-600 text-sm line-clamp-2">Pristine beaches, ancient temples, and vibrant street life await.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1489493173507-6feea31f12ff?auto=format&fit=crop&q=80" alt="North Africa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Adventure</div>
+              </div>
+              <div className="p-5 flex-grow flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">North Africa</h3>
+                  <p className="text-gray-600 text-sm line-clamp-2">Experience the magic of the Sahara and vibrant historical medinas.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
+              <div className="relative w-full aspect-[4/3] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&q=80" alt="Swiss Alps" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute top-4 left-4 bg-white/95 text-[#4d7c0f] px-3 py-1 rounded-full text-xs font-semibold shadow-sm">Nature</div>
+              </div>
+              <div className="p-5 flex-grow flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#65a30d] transition-colors">Swiss Alps</h3>
+                  <p className="text-gray-600 text-sm line-clamp-2">Breathtaking mountain vistas, luxury chalets, and alpine tranquility.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* My Trips */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gray-100 rounded-3xl mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">My Trips</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Upcoming Trip */}
+            <div className="bg-[#65a30d]/10 border-2 border-[#65a30d]/30 rounded-xl overflow-hidden shadow-sm flex flex-col">
+              <div className="relative h-48">
+                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&q=80" alt="London bridge at sunset" className="w-full h-full object-cover" />
+                <div className="absolute top-4 right-4 bg-[#65a30d] text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">Upcoming</div>
+              </div>
+              <div className="p-5">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-bold text-gray-900">London Getaway</h3>
+                  <span className="text-[#65a30d] font-bold text-sm">In 12 Days</span>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">Dec 20 - Dec 27, 2024</p>
+                <div className="flex items-center gap-4 text-gray-500 text-sm">
+                  <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> 7 Days</span>
+                  <span className="flex items-center gap-1"><Users className="w-4 h-4" /> 2 People</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Completed Trip 1 */}
+            <div className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col border border-gray-100">
+              <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80" alt="Tokyo Explorer" className="w-full h-48 object-cover" />
+              <div className="p-5">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-bold text-gray-900">Tokyo Explorer</h3>
+                  <span className="text-[#65a30d] font-bold text-sm">Completed</span>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">Oct 12 - Oct 20, 2023</p>
+                <div className="flex items-center gap-4 text-gray-500 text-sm">
+                  <span className="flex items-center gap-1"><Camera className="w-4 h-4" /> 240 Photos</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> 8 Cities</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Completed Trip 2 */}
+            <div className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col border border-gray-100">
+              <img src="https://images.unsplash.com/photo-1526392060635-9d60198d3de3?auto=format&fit=crop&q=80" alt="Inca Trail Trek" className="w-full h-48 object-cover" />
+              <div className="p-5">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-bold text-gray-900">Inca Trail Trek</h3>
+                  <span className="text-[#65a30d] font-bold text-sm">Completed</span>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">Jun 05 - Jun 14, 2023</p>
+                <div className="flex items-center gap-4 text-gray-500 text-sm">
+                  <span className="flex items-center gap-1"><Camera className="w-4 h-4" /> 156 Photos</span>
+                  <span className="flex items-center gap-1"><Footprints className="w-4 h-4" /> 42 Miles</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Completed Trip 3 */}
+            <div className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col border border-gray-100 mt-2">
+              <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80" alt="Greek Islands" className="w-full h-48 object-cover" />
+              <div className="p-5">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-bold text-gray-900">Greek Islands</h3>
+                  <span className="text-[#65a30d] font-bold text-sm">Completed</span>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">Aug 22 - Sep 02, 2022</p>
+                <div className="flex items-center gap-4 text-gray-500 text-sm">
+                  <span className="flex items-center gap-1"><Camera className="w-4 h-4" /> 312 Photos</span>
+                  <span className="flex items-center gap-1"><Sailboat className="w-4 h-4" /> 5 Islands</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Recommended & Budget */}
+        <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            {/* Recommended */}
+            <div className="lg:col-span-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Recommended For You</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="relative rounded-xl overflow-hidden group cursor-pointer shadow-sm">
+                  <img src="https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&q=80" alt="Iceland Aurora" className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent flex flex-col justify-end p-6">
+                    <span className="text-[#a3e635] text-sm font-semibold mb-1 shadow-sm">Based on interest: Nature</span>
+                    <h3 className="text-white text-2xl font-bold">Reykjavik, Iceland</h3>
+                  </div>
+                </div>
+                <div className="relative rounded-xl overflow-hidden group cursor-pointer shadow-sm">
+                  <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80" alt="Kyoto Shrine" className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent flex flex-col justify-end p-6">
+                    <span className="text-[#a3e635] text-sm font-semibold mb-1 shadow-sm">Trending Now</span>
+                    <h3 className="text-white text-2xl font-bold">Kyoto, Japan</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Budget Overview */}
+            <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Budget Overview</h2>
+              <div className="space-y-6">
+                <div>
+                  <div className="flex justify-between text-sm font-semibold mb-2">
+                    <span className="text-gray-900">London Trip Budget</span>
+                    <span className="text-[#65a30d]">65% Used</span>
+                  </div>
+                  <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                    <div className="bg-[#65a30d] h-full rounded-full" style={{ width: '65%' }}></div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-between items-center py-5 border-t border-gray-100">
+                  <span className="text-gray-500 font-medium tracking-tight">Total Spent (Dec)</span>
+                  <span className="text-gray-900 font-bold text-3xl tracking-tight">$2,450</span>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between text-gray-800">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#4d7c0f]">
+                        <Plane className="w-4 h-4" />
+                      </div>
+                      <span className="font-medium text-[15px]">Flights</span>
+                    </div>
+                    <span className="font-semibold">$1,200</span>
+                  </div>
+                  <div className="flex items-center justify-between text-gray-800">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#4d7c0f]">
+                        <Bed className="w-4 h-4" />
+                      </div>
+                      <span className="font-medium text-[15px]">Stay</span>
+                    </div>
+                    <span className="font-semibold">$850</span>
+                  </div>
+                </div>
+                
+                <button className="w-full py-3 text-[#4d7c0f] font-semibold tracking-wide border-2 border-gray-200 rounded-xl hover:border-[#65a30d] hover:bg-[#65a30d]/5 transition-colors mt-6">
+                  View Full Report
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Floating Action Button */}
+        <button className="fixed bottom-8 right-8 z-50 flex items-center gap-2 bg-[#65a30d] text-white px-6 py-4 rounded-full shadow-lg hover:bg-[#4d7c0f] hover:-translate-y-1 transition-all group border border-transparent">
+          <Plus className="w-5 h-5" />
+          <span className="font-semibold text-[15px]">Plan a trip</span>
+        </button>
+
+      </main>
+      
+      <Footer />
+    </div>
+  );
+}
